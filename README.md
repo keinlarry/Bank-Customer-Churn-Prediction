@@ -22,13 +22,13 @@
 ## Sommaire
 
 1. [Problématique](#1---problématique)
-2. [Analyse Exploratoire des Données (EDA)](#analyse-exploratoire-des-données-eda)
-3. [Stack technique](#stack-technique)
-4. [Structure du projet](#-structure-du-projet)
-5. [Installation & usage](#-installation--usage)
-6. [Modélisation](#2---modélisation)
-7. [Explicabilité SHAP](#3---explicabilité-shap)
-8. [Insights métier](#4---insights-métier)
+2. [Analyse Exploratoire des Données (EDA)](#2---analyse-exploratoire-des-données-eda)
+3. [Stack technique](#3---stack-technique)
+4. [Structure du projet](#4---structure-du-projet)
+5. [Installation & usage](#5---installation--usage)
+6. [Modélisation](#6---modélisation)
+7. [Explicabilité SHAP](#7---explicabilité-shap)
+8. [Insights métier](#8---insights-métier)
 9. [License](#-license)
 ---
 
@@ -48,7 +48,7 @@ Le dataset présente un déséquilibre de classe (~20.4% de churn), ce qui néce
 ---
 
 
-## Analyse Exploratoire des Données (EDA)
+## 2 - Analyse Exploratoire des Données (EDA)
 
 Avant la modélisation, une analyse fine des distributions a permis de mettre en évidence les comportements distinctifs entre les clients fidèles (`churn=0`) et ceux ayant quitté la banque (`churn=1`).
 
@@ -59,7 +59,7 @@ Avant la modélisation, une analyse fine des distributions a permis de mettre en
 ---
 
 
-## Stack technique
+## 3 - Stack technique
 
 | Catégorie | Technologies |
 |---|---|
@@ -75,7 +75,7 @@ Avant la modélisation, une analyse fine des distributions a permis de mettre en
 
 ---
 
-## Structure du projet
+## 4 - Structure du projet
 
 ```plaintext
 BANK-CUSTOMER-CHURN-PREDICTION/
@@ -113,7 +113,7 @@ BANK-CUSTOMER-CHURN-PREDICTION/
 
 ---
 
-## Installation & usage
+## 5 - Installation & usage
 
 **1. Cloner le dépôt et installer les dépendances**
 
@@ -145,11 +145,15 @@ streamlit run source/dashboard.py
 ```
 
 
-## 2 - Modélisation
+## 6 - Modélisation
 
 ### Approche comparative
 
 Cinq modèles évalués sur quatre métriques (Accuracy, F1-Score, ROC-AUC, CV-AUC) et les résultats importants sont :
+
+<p align="center">
+  <img src="images/comparaison.png" alt="Courbes comparatives ROC" width="600">
+</p>
 
 | Modèle | ROC-AUC | CV-AUC |
 |---|---|---|
@@ -159,9 +163,6 @@ Cinq modèles évalués sur quatre métriques (Accuracy, F1-Score, ROC-AUC, CV-A
 | Random Forest | ~0.85 | ~0.85 |
 | **Gradient Boosting ✅** | **~0.87** | **~0.86** |
 
-<p align="center">
-  <img src="images/comparaison.png" alt="Courbes comparatives ROC" width="600">
-</p>
 
 ### Feature engineering
 
@@ -189,7 +190,7 @@ param_distributions = {
 
 ---
 
-## 3 - Explicabilité SHAP
+## 7 - Explicabilité SHAP
 
 ### Explicabilité globale (notebook)
 
@@ -209,7 +210,7 @@ Explication pour **un client spécifique**, répondant à la question :
 
 ---
 
-## 4 - Insights métier
+## 8 - Insights métier
 
 | Observation | Impact |
 |---|---|
