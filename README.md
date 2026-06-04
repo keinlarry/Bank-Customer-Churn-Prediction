@@ -159,7 +159,9 @@ Cinq modèles évalués sur quatre métriques (Accuracy, F1-Score, ROC-AUC, CV-A
 | Random Forest | ~0.85 | ~0.85 |
 | **Gradient Boosting ✅** | **~0.87** | **~0.86** |
 
-
+<p align="center">
+  <img src="images/comparaison.png" alt="Courbes comparatives ROC" width="600">
+</p>
 
 ### Feature engineering
 
