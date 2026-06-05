@@ -147,20 +147,39 @@ if predict_btn:
             client_scaled_np  = scaler.transform(client_preprocessed)
             feature_names     = list(client_preprocessed.columns)
 
+
             # Calculons les valeurs SHAP pour CE CLIENT UNIQUEMENT
             explainer_local   = shap.TreeExplainer(model_gb)
-            shap_values_local = explainer_local.shap_values(client_scaled_np)  # shape (1, n_features)
+            shap_values_local = explainer_local.shap_values(client_scaled_np)
 
-            shap_client  = shap_values_local[0]   # vecteur SHAP du client
-            feature_vals = client_scaled_np[0]    # valeurs scalées (pour affichage)
+            # Normalisation de la forme des shap_values
+            if isinstance(shap_values_local, list):
+                shap_client = shap_values_local[1][0]
+            elif shap_values_local.ndim == 3:
+                shap_client = shap_values_local[1][0]
+            elif shap_values_local.ndim == 2:
+                shap_client = shap_values_local[0]
+            else:
+                shap_client = shap_values_local
+
+            shap_client  = np.array(shap_client, dtype=np.float64).flatten()
+            feature_vals = np.array(client_scaled_np[0], dtype=np.float64).flatten()
+
+            expected_val = explainer_local.expected_value
+            if isinstance(expected_val, (list, np.ndarray)):
+                expected_val = float(expected_val[1] if len(expected_val) > 1 else expected_val[0])
+            else:
+                expected_val = float(expected_val)
 
             # Waterfall Plot
             shap_exp = shap.Explanation(
                 values=shap_client,
-                base_values=explainer_local.expected_value,
+                base_values=expected_val,
                 data=feature_vals,
                 feature_names=feature_names
             )
+
+
             fig_wf, _ = plt.subplots(figsize=(9, 5))
             shap.plots.waterfall(shap_exp, max_display=10, show=False)
             st.pyplot(plt.gcf(), clear_figure=True)
@@ -178,7 +197,7 @@ if predict_btn:
 
             st.dataframe(
                 contrib_df.style
-                    .applymap(color_shap, subset=["Impact SHAP"])
+                    .map(color_shap, subset=["Impact SHAP"])
                     .format({"Valeur (client)": "{:.3f}", "Impact SHAP": "{:+.4f}"}),
                 use_container_width=True,
                 hide_index=True
