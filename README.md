@@ -21,20 +21,26 @@
 
 ## Sommaire
 
+### Approche Data & Insights
 1. [Problématique](#1---problématique)
 2. [Analyse Exploratoire des Données (EDA)](#2---analyse-exploratoire-des-données-eda)
-3. [Stack technique](#3---stack-technique)
-4. [Structure du projet](#4---structure-du-projet)
-5. [Installation & usage](#5---installation--usage)
-6. [Modélisation](#6---modélisation)
-7. [Explicabilité SHAP](#7---explicabilité-shap)
-8. [Insights métier](#8---insights-métier)
+3. [Modélisation](#3---modélisation)
+4. [Explicabilité SHAP](#4---explicabilité-shap)
+5. [Insights métier](#5---insights-métier)
+
+### Stack & Industrialisation
+6. [Stack technique](#6---stack-technique)
+7. [Structure du projet](#7---structure-du-projet)
+8. [Installation & Utilisation (API FastAPI)](#8---installation--utilisation-api-fastapi)
 9. [License](#-license)
+
+
 ---
+
 
 ## 1 - Problématique
 
-Dans un secteur bancaire compétitif, acquérir un nouveau client coûte **statistiquement bien plus cher que d'en fidéliser un existant**. Ce projet transforme la stratégie de rétention : **de réactive à proactive**, en prédisant le churn avant qu'il ne se produise.
+Dans un secteur bancaire compétitif, acquérir un nouveau client coûte **cinq à sept fois plus cher que d'en fidéliser un existant**. Face à cet enjeu, ce projet transforme la stratégie de rétention : **de réactive à proactive**, en prédisant le taux d'attrition **(churn)** avant qu'il ne se produise.
 
 **Question centrale :** Quels sont les facteurs déterminants qui poussent un client à quitter l'établissement, et peut-on prédire ce comportement avec précision ?
 
@@ -43,7 +49,8 @@ Dans un secteur bancaire compétitif, acquérir un nouveau client coûte **stati
   <img src="images/repar_client.png" alt="Répartition du Churn" width="800">
 </p>
 
-Le dataset présente un déséquilibre de classe (~20.4% de churn), ce qui nécessite des métriques d'évaluation adaptées (ROC-AUC, F1-Score) lors de la modélisation.
+Le dataset présente un déséquilibre de classe **(~20.4% de churn)**, ce qui nécessite des métriques d'évaluation adaptées **(ROC-AUC, F1-Score)** lors de la modélisation.
+
 
 ---
 
@@ -56,96 +63,11 @@ Avant la modélisation, une analyse fine des distributions a permis de mettre en
   <img src="images/histo.png" alt="Distributions des variables" width="900">
 </p>
 
----
-
-
-## 3 - Stack technique
-
-| Catégorie | Technologies |
-|---|---|
-| **Langage** | Python 3.11 |
-| **Data & ML** | Pandas, NumPy, Scikit-Learn 1.4 |
-| **Modèle** | GradientBoostingClassifier (optimisé RandomizedSearchCV) |
-| **Explicabilité** | SHAP (TreeExplainer — global & local) |
-| **Visualisation** | Matplotlib, Seaborn |
-| **API REST** | FastAPI, Pydantic, Uvicorn |
-| **Dashboard** | Streamlit |
-| **Sérialisation** | Joblib |
-| **Notebook** | Jupyter / Google Colab |
 
 ---
 
-## 4 - Structure du projet
 
-```plaintext
-BANK-CUSTOMER-CHURN-PREDICTION/
-│
-├── data/
-│   └── README.md                            # Informations détaillées sur les données
-│
-├── images/
-│   ├── .gitkeep
-│   ├── Churn.jpg                            # Image d'illustration principale
-│   ├── comparaison.png                      # Graphique des courbes ROC
-│   ├── histo.png                            # Multi-histogrammes des distributions
-│   └── repar_client.png                     # Graphique de répartition du Churn
-│
-├── modele/
-│   ├── .gitkeep
-│   └── bank_churn_model.joblib              # Le modèle sérialisé final
-│
-├── notebook/
-│   ├── .gitkeep
-│   └── Bank_Customer_Churn.ipynb            # Notebook de recherche, EDA, modélisation & sérialisation
-│
-├── source/
-│   ├── __pycache__/                         
-│   ├── dashboard.py                         # Application interactive Streamlit
-│   ├── feature_engineering.py               # Pipeline custom de transformation des données
-│   └── main.py                              # API REST développée avec FastAPI
-│
-├── .gitignore                               
-├── LICENSE                                 
-├── README.md                                
-└── requirements.txt                         # Liste des dépendances Python  
-```
-
-
----
-
-## 5 - Installation & usage
-
-**1. Cloner le dépôt et installer les dépendances**
-
-```bash
-git clone https://github.com/keinlarry/Bank-Customer-Churn-Prediction.git
-cd /Bank-Customer-Churn-Prediction
-pip install -r requirements.txt
-```
-
-**2. Générer le modèle** (exécuter le notebook complet, ou la section 10.1)
-
-```bash
-# Le fichier bank_churn_model.joblib sera créé dans le répertoire courant
-jupyter notebook notebook/Bank_Customer_Churn.ipynb
-```
-
-**3. Lancer l'API FastAPI**
-
-```bash
-uvicorn source.main:app --reload --port 8000
-# Documentation interactive : http://localhost:8000/docs
-```
-
-**4. Lancer le dashboard Streamlit**
-
-```bash
-streamlit run source/dashboard.py
-# Interface : http://localhost:8501
-```
-
-
-## 6 - Modélisation
+## 3 - Modélisation
 
 ### Approche comparative
 
@@ -188,9 +110,11 @@ param_distributions = {
 }
 ```
 
+
 ---
 
-## 7 - Explicabilité SHAP
+
+## 4 - Explicabilité SHAP
 
 ### Explicabilité globale (notebook)
 
@@ -208,9 +132,11 @@ Explication pour **un client spécifique**, répondant à la question :
 - **Tableau de contributions** : valeurs réelles du client + impact SHAP coloré  
   (🔴 pousse vers le churn / 🟢 pousse vers la fidélité)
 
+
 ---
 
-## 8 - Insights métier
+
+## 5 - Insights métier
 
 | Observation | Impact |
 |---|---|
@@ -219,6 +145,96 @@ Explication pour **un client spécifique**, répondant à la question :
 | **Membres inactifs** — taux de churn ~27% vs ~14% pour les membres actifs | Levier d'action direct |
 | **Allemagne** — taux de churn ~32%, soit 2× la France et l'Espagne | Segment géographique prioritaire |
 | **Score de crédit & salaire estimé** — corrélation quasi nulle avec le churn | Variables non discriminantes |
+
+
+---
+
+
+## 6 - Stack technique
+
+| Catégorie | Technologies |
+|---|---|
+| **Langage** | Python 3.11 |
+| **Data & ML** | Pandas, NumPy, Scikit-Learn 1.4 |
+| **Modèle** | GradientBoostingClassifier (optimisé RandomizedSearchCV) |
+| **Explicabilité** | SHAP (TreeExplainer — global & local) |
+| **Visualisation** | Matplotlib, Seaborn |
+| **API REST** | FastAPI, Pydantic, Uvicorn |
+| **Dashboard** | Streamlit |
+| **Sérialisation** | Joblib |
+| **Notebook** | Jupyter / Google Colab |
+
+---
+
+## 7 - Structure du projet
+
+```plaintext
+BANK-CUSTOMER-CHURN-PREDICTION/
+│
+├── data/
+│   └── README.md                            # Informations détaillées sur les données
+│
+├── images/
+│   ├── .gitkeep
+│   ├── Churn.jpg                            # Image d'illustration principale
+│   ├── comparaison.png                      # Graphique des courbes ROC
+│   ├── histo.png                            # Multi-histogrammes des distributions
+│   └── repar_client.png                     # Graphique de répartition du Churn
+│
+├── modele/
+│   ├── .gitkeep
+│   └── bank_churn_model.joblib              # Le modèle sérialisé final
+│
+├── notebook/
+│   ├── .gitkeep
+│   └── Bank_Customer_Churn.ipynb            # Notebook de recherche, EDA, modélisation & sérialisation
+│
+├── source/
+│   ├── __pycache__/                         
+│   ├── dashboard.py                         # Application interactive Streamlit
+│   ├── feature_engineering.py               # Pipeline custom de transformation des données
+│   └── main.py                              # API REST développée avec FastAPI
+│
+├── .gitignore                               
+├── LICENSE                                 
+├── README.md                                
+└── requirements.txt                         # Liste des dépendances Python  
+```
+
+
+---
+
+## 8 - Installation & Utilisation (API FastAPI)
+
+**1. Cloner le dépôt et installer les dépendances**
+
+```bash
+git clone https://github.com/keinlarry/Bank-Customer-Churn-Prediction.git
+cd /Bank-Customer-Churn-Prediction
+pip install -r requirements.txt
+```
+
+**2. Générer le modèle** (exécuter le notebook complet, ou la section 10.1)
+
+```bash
+# Le fichier bank_churn_model.joblib sera créé dans le répertoire courant
+jupyter notebook notebook/Bank_Customer_Churn.ipynb
+```
+
+**3. Lancer l'API FastAPI**
+
+```bash
+uvicorn source.main:app --reload --port 8000
+# Documentation interactive : http://localhost:8000/docs
+```
+
+**4. Lancer le dashboard Streamlit**
+
+```bash
+streamlit run source/dashboard.py
+# Interface : http://localhost:8501
+```
+
 
 ---
 
