@@ -16,3 +16,10 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+# Fichiers exclus de la branche production
+notebook/
+images/
+__pycache__/
+*.pyc
+.env
