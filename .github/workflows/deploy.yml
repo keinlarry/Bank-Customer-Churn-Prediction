@@ -42,5 +42,8 @@ jobs:
     if: github.ref == 'refs/heads/production'
 
     steps:
-      - name: Déployer sur Render
-        run: echo "Deploy step — à configurer à l'étape suivante"
+      - name: Déployer l'API sur Render
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_API }}
+
+      - name: Déployer le Dashboard sur Render
+        run: curl -X POST ${{ secrets.RENDER_DEPLOY_DASHBOARD }}
