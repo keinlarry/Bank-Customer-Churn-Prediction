@@ -1,4 +1,4 @@
-name: CI - Test & Lint
+name: CI - Test & Deploy
 
 on:
   push:
@@ -13,25 +13,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Récupérer le code
       - name: Checkout du code
         uses: actions/checkout@v4
 
-      # 2. Installer Python
       - name: Setup Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # 3. Installer les dépendances
       - name: Installer les dépendances
         run: pip install -r requirements.txt
 
-      # 4. Vérifier que l'API FastAPI s'importe sans erreur
+      - name: Installer pytest
+        run: pip install pytest httpx
+
       - name: Vérifier l'import de l'API
         run: python -c "import source.main; print('API OK')"
 
-      # 5. Vérifier que le pipeline feature engineering s'importe sans erreur
       - name: Vérifier le feature engineering
         run: python -c "import source.feature_engineering; print('Feature engineering OK')"
 
