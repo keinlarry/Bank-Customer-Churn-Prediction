@@ -1,6 +1,7 @@
 # Data & modèles lourds
 data/*.csv
 data/*.xlsx
+modele/*.joblib
 modele/*.pkl
 
 # Jupyter
