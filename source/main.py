@@ -20,8 +20,7 @@ app = FastAPI(
 
 # Chargeons le modèle pré-entraîné au démarrage de l'API
 try:
-    # model = joblib.load('/workspaces/Bank-Customer-Churn-Prediction/modele/bank_churn_model.joblib')
-    # Alternative
+    # Notre modele
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     model = joblib.load(os.path.join(BASE_DIR, 'modele', 'bank_churn_model.joblib'))
 

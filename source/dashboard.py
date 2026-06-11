@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,7 +12,9 @@ from feature_engineering import FeatureEngineering
 # ─────────────────────────────────────────────────────────────────────────────
 # CONFIG
 # ─────────────────────────────────────────────────────────────────────────────
-API_URL = "http://127.0.0.1:8000/predire"
+
+# URL Render en production, localhost en local
+API_URL = os.getenv("API_URL", "http://localhost:8000")
 MODEL_PATH = "/workspaces/Bank-Customer-Churn-Prediction/modele/bank_churn_model.joblib"
 
 st.set_page_config(
