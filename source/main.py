@@ -1,6 +1,6 @@
 import sys
 import __main__
-
+import os
 import joblib
 import pandas as pd
 from fastapi import FastAPI, HTTPException
@@ -20,7 +20,11 @@ app = FastAPI(
 
 # Chargeons le modèle pré-entraîné au démarrage de l'API
 try:
-    model = joblib.load('/workspaces/Bank-Customer-Churn-Prediction/modele/bank_churn_model.joblib')
+    # model = joblib.load('/workspaces/Bank-Customer-Churn-Prediction/modele/bank_churn_model.joblib')
+    # Alternative
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    model = joblib.load(os.path.join(BASE_DIR, 'modele', 'bank_churn_model.joblib'))
+
 except Exception as e:
     raise RuntimeError(f"Impossible de charger le fichier du modèle : {e}")
 
