@@ -34,3 +34,15 @@ jobs:
       # 5. Vérifier que le pipeline feature engineering s'importe sans erreur
       - name: Vérifier le feature engineering
         run: python -c "import source.feature_engineering; print('Feature engineering OK')"
+
+      - name: Lancer les tests pytest
+        run: pytest tests/ -v
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/production'
+
+    steps:
+      - name: Déployer sur Render
+        run: echo "Deploy step — à configurer à l'étape suivante"
