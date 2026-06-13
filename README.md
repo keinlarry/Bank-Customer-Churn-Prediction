@@ -43,52 +43,25 @@ GitHub Actions — Job : deploy
 Render redéploie les deux services automatiquement
 ```
 > Si les tests échouent, le déploiement est **bloqué automatiquement**.
+
 ---
 
+## Tests
 
-## Structure globale du projet
-
-```plaintext
-BANK-CUSTOMER-CHURN-PREDICTION/
-│
-├── .github/
-│   └── workflows/
-│       └── deploy.yml                       # Pipeline CI/CD
-│
-├── data/
-│   └── README.md                            # Informations détaillées sur les données
-│
-├── images/
-│   ├── .gitkeep
-│   ├── Churn.jpg                            # Image d'illustration principale
-│   ├── comparaison.png                      # Graphique des courbes ROC
-│   ├── histo.png                            # Multi-histogrammes des distributions
-│   └── repar_client.png                     # Graphique de répartition du Churn
-│
-├── modele/
-│   ├── .gitkeep
-│   └── bank_churn_model.joblib              # Le modèle sérialisé final
-│
-├── notebook/
-│   ├── .gitkeep
-│   └── Bank_Customer_Churn.ipynb            # Notebook de recherche, EDA, modélisation & sérialisation
-│
-├── source/
-│   ├── __pycache__/                         
-│   ├── dashboard.py                         # Application interactive Streamlit
-│   ├── feature_engineering.py               # Pipeline custom de transformation des données
-│   └── main.py                              # API REST développée avec FastAPI
-│
-├── tests/
-│   ├── __init__.py
-│   └── test_api.py                          # 7 tests pytest sur les endpoints
-│
-├── .gitignore                              
-├── LICENSE                                 
-├── README.md                                
-└── requirements.txt                         # Liste des dépendances Python  
-
+```bash
+pip install pytest httpx
+pytest tests/ -v
 ```
+
+| Test | Description |
+|---|---|
+| `test_home` | Route racine répond 200 |
+| `test_prediction_format` | Réponse contient les 3 champs attendus |
+| `test_probabilite_valide` | Probabilité entre 0 et 1 |
+| `test_prediction_binaire` | Prédiction vaut 0 ou 1 |
+| `test_client_churn_proba_elevee` | Client à risque → proba > 0.5 |
+| `test_donnees_manquantes` | Données incomplètes → erreur 422 |
+| `test_status_coherent` | Message status cohérent avec la probabilité |
 
 
 ---
@@ -115,26 +88,9 @@ uvicorn source.main:app --reload --port 8000
 streamlit run source/dashboard.py
 # Interface interactive
 ```
----
-
-## Tests
-
-```bash
-pip install pytest httpx
-pytest tests/ -v
-```
-
-| Test | Description |
-|---|---|
-| `test_home` | Route racine répond 200 |
-| `test_prediction_format` | Réponse contient les 3 champs attendus |
-| `test_probabilite_valide` | Probabilité entre 0 et 1 |
-| `test_prediction_binaire` | Prédiction vaut 0 ou 1 |
-| `test_client_churn_proba_elevee` | Client à risque → proba > 0.5 |
-| `test_donnees_manquantes` | Données incomplètes → erreur 422 |
-| `test_status_coherent` | Message status cohérent avec la probabilité |
 
 ---
+
 
 ## Exemple d'appel API
 
