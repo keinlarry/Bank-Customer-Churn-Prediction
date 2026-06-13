@@ -14,8 +14,10 @@ from feature_engineering import FeatureEngineering
 # ─────────────────────────────────────────────────────────────────────────────
 
 # URL Render en production, localhost en local
-API_URL = os.getenv("API_URL", "http://localhost:8000")
-MODEL_PATH = "/workspaces/Bank-Customer-Churn-Prediction/modele/bank_churn_model.joblib"
+API_URL = os.getenv("API_URL", "https://bank-customer-churn-prediction-ic06.onrender.com/predire")
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, 'modele', 'bank_churn_model.joblib')
 
 st.set_page_config(
     page_title="ABC Bank — Détecteur de Churn",
