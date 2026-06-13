@@ -22,6 +22,7 @@
 | Service | URL |
 |---|---|
 | **API FastAPI** | [bank-customer-churn-prediction-ic06.onrender.com](https://bank-customer-churn-prediction-ic06.onrender.com) |
+| **Documentation API** | [https://bank-customer-churn-prediction-ic06.onrender.com/docs](https://bank-customer-churn-prediction-ic06.onrender.com/docs) |
 | **Dashboard Streamlit** | [bank-churn-dashboard-pzop.onrender.com](https://bank-churn-dashboard-pzop.onrender.com/) |
 
 ---
