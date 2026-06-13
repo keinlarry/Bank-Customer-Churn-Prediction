@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -11,8 +12,12 @@ from feature_engineering import FeatureEngineering
 # ─────────────────────────────────────────────────────────────────────────────
 # CONFIG
 # ─────────────────────────────────────────────────────────────────────────────
-API_URL = "http://127.0.0.1:8000/predire"
-MODEL_PATH = "/workspaces/Bank-Customer-Churn-Prediction/modele/bank_churn_model.joblib"
+
+# URL Render en production, localhost en local
+API_URL = os.getenv("API_URL", "https://bank-customer-churn-prediction-ic06.onrender.com/predire")
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+MODEL_PATH = os.path.join(BASE_DIR, 'modele', 'bank_churn_model.joblib')
 
 st.set_page_config(
     page_title="ABC Bank — Détecteur de Churn",
