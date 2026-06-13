@@ -88,8 +88,7 @@ if predict_btn:
             response = requests.post(
                 API_URL,
                 json=payload,
-                timeout=10,
-                headers={"ngrok-skip-browser-warning": "true"}
+                timeout=60,
                 )
             response.raise_for_status()
             result = response.json()
