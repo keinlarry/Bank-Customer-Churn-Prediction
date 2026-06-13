@@ -2,6 +2,8 @@
 
 <div align="center">
 
+![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?logo=github-actions)
+![Deploy](https://img.shields.io/badge/Deploy-Render-46E3B7?logo=render)
 ![Python](https://img.shields.io/badge/Python-3.12-blue?logo=python)
 ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.9.0-orange?logo=scikit-learn)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.136.3-009688?logo=fastapi)
@@ -12,14 +14,16 @@
   <img src="images/Churn.jpg" alt="Dashboard de prédiction du churn" width="600">
 </p>
 
-</div>
+
 
 > Modèle de Machine Learning pour anticiper le départ des clients bancaires,  
-> Déployé via une API FastAPI et un dashboard Streamlit interactif.
-
----
+> déployé en production via une API FastAPI et un dashboard Streamlit interactif.
+</div>
 
 ## Sommaire
+
+### Production
+- [Démo en ligne](#démo-en-ligne)
 
 ### Approche Data & Insights
 1. [Problématique](#1---problématique)
@@ -33,6 +37,20 @@
 7. [Structure du projet](#7---structure-du-projet)
 8. [Installation & Utilisation (API FastAPI)](#8---installation--utilisation-api-fastapi)
 9. [License](#-license)
+
+
+---
+
+
+## Démo en ligne
+
+| Service | URL |
+|---|---|
+| **API FastAPI** | [bank-customer-churn-prediction-ic06.onrender.com](https://bank-customer-churn-prediction-ic06.onrender.com) |
+| **Dashboard Streamlit** | [bank-churn-dashboard-pzop.onrender.com](https://bank-churn-dashboard-pzop.onrender.com/) |
+
+> Déployé en continu via GitHub Actions → Render. 
+> Voir la branche [`production`](../../tree/production) pour l'état déployé.
 
 
 ---
@@ -154,15 +172,15 @@ Explication pour **un client spécifique**, répondant à la question :
 
 | Catégorie | Technologies |
 |---|---|
-| **Langage** | Python 3.11 |
-| **Data & ML** | Pandas, NumPy, Scikit-Learn 1.4 |
+| **Langage** | Python 3.12 |
+| **Data & ML** | Pandas 3.0, NumPy 2.4, Scikit-Learn 1.9 |
 | **Modèle** | GradientBoostingClassifier (optimisé RandomizedSearchCV) |
 | **Explicabilité** | SHAP (TreeExplainer — global & local) |
 | **Visualisation** | Matplotlib, Seaborn |
 | **API REST** | FastAPI, Pydantic, Uvicorn |
 | **Dashboard** | Streamlit |
 | **Sérialisation** | Joblib |
-| **Notebook** | Jupyter / Google Colab |
+| **Notebook** | Jupyter |
 
 ---
 
@@ -170,6 +188,10 @@ Explication pour **un client spécifique**, répondant à la question :
 
 ```plaintext
 BANK-CUSTOMER-CHURN-PREDICTION/
+│
+├── .github/
+│   └── workflows/
+│       └── deploy.yml                       # Pipeline CI/CD
 │
 ├── data/
 │   └── README.md                            # Informations détaillées sur les données
@@ -195,7 +217,11 @@ BANK-CUSTOMER-CHURN-PREDICTION/
 │   ├── feature_engineering.py               # Pipeline custom de transformation des données
 │   └── main.py                              # API REST développée avec FastAPI
 │
-├── .gitignore                               
+├── tests/
+│   ├── __init__.py
+│   └── test_api.py                          # 7 tests pytest sur les endpoints
+│
+├── .gitignore                              
 ├── LICENSE                                 
 ├── README.md                                
 └── requirements.txt                         # Liste des dépendances Python  
