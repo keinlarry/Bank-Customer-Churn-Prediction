@@ -1,6 +1,7 @@
 # Data & modèles lourds
 data/*.csv
 data/*.xlsx
+modele/*.pkl
 
 # Jupyter
 .ipynb_checkpoints/
@@ -14,10 +15,3 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
-
-# Fichiers exclus de la branche production
-notebook/
-images/
-__pycache__/
-*.pyc
-.env
